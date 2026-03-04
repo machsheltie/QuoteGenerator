@@ -4,21 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quote Generator — Aaron's Lawn Care</title>
-
-    <!-- Map bare module specifiers to CDN URLs so the JSX file's imports resolve -->
-    <script type="importmap">
-      {
-        "imports": {
-          "react": "https://esm.sh/react@18.3.1",
-          "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
-          "react-dom/client": "https://esm.sh/react-dom@18.3.1/client"
-        }
-      }
-    </script>
-
-    <!-- Babel standalone transforms JSX at runtime (no build step needed) -->
-    <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
-
     <style>
       *, *::before, *::after { box-sizing: border-box; }
       body { margin: 0; background: #f5f7f5; font-family: sans-serif; }
@@ -26,12 +11,6 @@
   </head>
   <body>
     <div id="root"></div>
-
-    <script type="text/babel" data-type="module">
-      import { createRoot } from "react-dom/client";
-      import QuoteGenerator from "./quote_generator.jsx";
-
-      createRoot(document.getElementById("root")).render(<QuoteGenerator />);
-    </script>
+    <script type="module" src="/main.jsx"></script>
   </body>
 </html>
