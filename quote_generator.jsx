@@ -428,13 +428,12 @@ const QuoteGenerator = () => {
 
     const blob = new Blob([html], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `Quote_${quoteData.quoteNumber}_${(quoteData.customerName || 'Customer').replace(/\s+/g, '_')}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    const printWindow = window.open(url, '_blank');
+    if (printWindow) {
+      printWindow.addEventListener('afterprint', () => URL.revokeObjectURL(url));
+    } else {
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    }
     setShowPreview(true);
   };
 
@@ -794,7 +793,7 @@ const QuoteGenerator = () => {
               {showPreview ? "HIDE PREVIEW" : "PREVIEW"}
             </button>
             <button onClick={handlePrint} style={btnPrimary}>
-              DOWNLOAD QUOTE
+              SAVE AS PDF
             </button>
           </div>
 
@@ -814,7 +813,9 @@ const QuoteGenerator = () => {
                   QUOTE PREVIEW
                 </span>
               </div>
-              <PrintableQuote quoteData={quoteData} items={items.filter((i) => i.description)} />
+              <div style={{ zoom: 0.84 }}>
+                <PrintableQuote quoteData={quoteData} items={items.filter((i) => i.description)} />
+              </div>
             </div>
           )}
         </div>
